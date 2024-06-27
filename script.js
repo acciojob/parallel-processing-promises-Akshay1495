@@ -12,16 +12,15 @@ function downloadImage(image) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`Failed to load image's URL: ${image.url}`));
+    img.onerror = () =>
+      reject(new Error(`Failed to load image's URL: ${image.url}`));
     img.src = image.url;
   });
 }
 
 // Function to display downloaded images on the webpage
 function displayImages(images) {
-  // Clear the output div before displaying new images
-  output.innerHTML = '';
-  images.forEach(img => output.appendChild(img));
+  images.forEach((img) => output.appendChild(img)); 
 }
 
 // Event listener for the download button
@@ -32,8 +31,5 @@ btn.addEventListener("click", () => {
   // Use Promise.all to download all images in parallel
   Promise.all(downloadPromises)
     .then(displayImages) // Display images on success
-    .catch(error => {
-      console.error(error);
-      output.innerHTML = `<p style="color: red;">${error.message}</p>`;
-    }); // Log error on failure and display error message
+    .catch((error) => console.error(error)); // Log error on failure
 });
